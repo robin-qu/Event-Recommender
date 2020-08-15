@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Util static class to handle JSONObject and JSONArray IO
+ * 
+ * @author RobinQu
+ */
 public class RpcHelper {
 	public static void writeJsonObject(HttpServletResponse response, JSONObject obj) {
 		try {
@@ -30,6 +35,5 @@ public class RpcHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }

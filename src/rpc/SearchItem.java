@@ -19,6 +19,8 @@ import external.TicketMasterAPI;
 
 /**
  * Servlet implementation class SearchItem
+ * 
+ * @author RobinQu
  */
 @WebServlet("/search")
 public class SearchItem extends HttpServlet {

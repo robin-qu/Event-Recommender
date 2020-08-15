@@ -16,6 +16,11 @@ import org.json.JSONObject;
 import entity.Item;
 import entity.Item.ItemBuilder;
 
+/**
+ * Provide API to get information of an event from TicketMaster
+ * 
+ * @author RobinQu
+ */
 public class TicketMasterAPI {
 	private static final String URL = "https://app.ticketmaster.com/discovery/v2/events.json";
 	private static final String DEFAULT_KEYWORD = ""; // no restriction
@@ -44,9 +49,6 @@ public class TicketMasterAPI {
 	//    }
 	//    ...
 	//  }
-	/**
-	 * Helper methods
-	 */
 	private String getAddress(JSONObject event) throws JSONException {
 		if (!event.isNull("_embedded")) {
 			JSONObject embedded = event.getJSONObject("_embedded");
@@ -132,7 +134,13 @@ public class TicketMasterAPI {
 		return categories;
 	}
 
-	// Convert JSONArray to a list of item objects.
+	/**
+	 * Converts JSONArray to a list of item objects.
+	 * 
+	 * @param events: a JSONArray of events
+	 * @return a list of event Item
+	 * @throws JSONException
+	 */
 	private List<Item> getItemList(JSONArray events) throws JSONException {
 		List<Item> itemList = new ArrayList<>();
 
@@ -172,6 +180,14 @@ public class TicketMasterAPI {
 	}
 
 
+	/**
+	 * Invokes the TicketMaster API to get event information from TicketMaster server
+	 * 
+	 * @param lat: latitude of a point
+	 * @param lon: longitude of a point
+	 * @param keyword: search keyword
+	 * @return: a list of event Item
+	 */
 	public List<Item> search(double lat, double lon, String keyword) {
 		if (keyword == null) {
 			keyword= DEFAULT_KEYWORD;
@@ -187,20 +203,23 @@ public class TicketMasterAPI {
 		// Convert lat/lon to geo hash
 		String geoHash = GeoHash.encodeGeohash(lat, lon, 8);
 		
-		// Make your url query part like: "apikey=12345&geoPoint=abcd&keyword=music&radius=50"
+		// "apikey=12345&geoPoint=abcd&keyword=music&radius=50"
 		String query = String.format("apikey=%s&geoPoint=%s&keyword=%s&radius=%s", API_KEY, geoHash, keyword, 50);
+		
 		try {
-			// Open a HTTP connection between your Java application and TicketMaster based on url
+			// Open a HTTP connection between Java application and TicketMaster based on url
 			HttpURLConnection connection = (HttpURLConnection) new URL(URL + "?" + query).openConnection();
+			
 			// Set request method to GET
 			connection.setRequestMethod("GET");
+			
 			// Send request to TicketMaster and get response, response code could be returned directly
 			// response body is saved in InputStream of connection.
 			int responseCode = connection.getResponseCode();
 			System.out.println("\nSending 'GET' request to URL : " + URL + "?" + query);
 			System.out.println("Response Code : " + responseCode);
 			
-			// Now read response body to get events data
+			// Read response body to get events data
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String inputLine;
 			StringBuilder response = new StringBuilder();
@@ -235,7 +254,7 @@ public class TicketMasterAPI {
 	}
 
 	/**
-	 * Main entry for sample TicketMaster API requests.
+	 * TicketMaster API requests test.
 	 */
 	public static void main(String[] args) {
 		TicketMasterAPI tmApi = new TicketMasterAPI();

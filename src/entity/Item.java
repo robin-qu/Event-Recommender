@@ -6,6 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Stores the information of an evnet
+ * 
+ * @author RobinQu
+ *
+ */
 public class Item {
 	private String itemId;
 	

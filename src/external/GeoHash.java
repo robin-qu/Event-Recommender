@@ -1,8 +1,12 @@
 package external;
 
-// A copy from http://developer-should-know.com/post/87283491372/geohash-encoding-and-decoding-algorithm
+/**
+ * Generates geo hash key given the geo information of a point
+ * A copy from http://developer-should-know.com/post/87283491372/geohash-encoding-and-decoding-algorithm
+ * 
+ * @author RobinQu
+ */
 public class GeoHash {
-
     private static final String BASE_32 = "0123456789bcdefghjkmnpqrstuvwxyz";
 
     private static int divideRangeByValue(double value, double[] range) {
@@ -49,6 +53,11 @@ public class GeoHash {
         return geohash.toString();
     }
 
+    /**
+     * test
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
     	// Expect to see 'u4pruydqqvj8'
     	System.out.println(encodeGeohash(57.64911, 10.40744, 8));
